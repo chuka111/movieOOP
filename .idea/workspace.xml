@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="81fac49a-7f19-4716-87fd-64c5a8e69b48" name="Changes" comment="adding test file for sql">
+    <list default="true" id="81fac49a-7f19-4716-87fd-64c5a8e69b48" name="Changes" comment="customer class done">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/TestConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/TestConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/CustomerDetail.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/CustomerDetail.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,7 +29,9 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="2fYIbiX67sdQZF5GAz9RzOe859b" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -38,13 +39,15 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "onboarding.tips.debug.path": "C:/Users/G00414637@atu.ie/OneDrive - Atlantic TU/OOP/project3.0/summerProj/src/main/java/org/example/Main.java",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -53,7 +56,20 @@
     ]
   }
 }]]></component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.CustomerDetail">
+    <configuration name="CustomerDetail" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.example.CustomerDetail" />
+      <module name="JdbcExample" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="TestConnection" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.TestConnection" />
       <module name="JdbcExample" />
@@ -69,6 +85,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.CustomerDetail" />
         <item itemvalue="Application.TestConnection" />
       </list>
     </recent_temporary>
@@ -81,7 +98,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1713971663481</updated>
-      <workItem from="1713971664646" duration="419000" />
+      <workItem from="1713971664646" duration="5885000" />
     </task>
     <task id="LOCAL-00001" summary="adding test file for sql">
       <created>1713971793045</created>
@@ -90,7 +107,35 @@
       <option name="project" value="LOCAL" />
       <updated>1713971793045</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="connection test successful">
+      <created>1713972354522</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1713972354522</updated>
+    </task>
+    <task id="LOCAL-00003" summary="added customer class">
+      <created>1713972844409</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1713972844409</updated>
+    </task>
+    <task id="LOCAL-00004" summary="customer class done">
+      <created>1713975689907</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1713975689907</updated>
+    </task>
+    <task id="LOCAL-00005" summary="customer class done">
+      <created>1713976492122</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1713976492122</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -121,6 +166,9 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="adding test file for sql" />
-    <option name="LAST_COMMIT_MESSAGE" value="adding test file for sql" />
+    <MESSAGE value="connection test successful" />
+    <MESSAGE value="added customer class" />
+    <MESSAGE value="customer class done" />
+    <option name="LAST_COMMIT_MESSAGE" value="customer class done" />
   </component>
 </project>
