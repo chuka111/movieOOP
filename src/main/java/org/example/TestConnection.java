@@ -17,7 +17,7 @@ public class TestConnection {
             e.printStackTrace();
         } finally
         {
-            // Close the connection when finished
+            // Close the connection when finished.
             if (connection != null) {
                 try
                 {
