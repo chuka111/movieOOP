@@ -16,7 +16,6 @@ public class CustomerDetail {
         try {
             // Connect to the database
             Connection connection = DriverManager.getConnection(url, user, password);
-
             // Ask the user for options
             Scanner scanner = new Scanner(System.in);
             boolean exit = false;
@@ -58,14 +57,12 @@ public class CustomerDetail {
                         System.out.println("Invalid choice!");
                 }
             }
-
             // Close the connection
             connection.close();
         } catch (SQLException e) {
             System.err.println("SQL Exception: " + e.getMessage());
         }
     }
-
     // Insert new customer into the customer table
     static void insertCustomer(Connection connection, String name) throws SQLException {
         String insertSQL = "INSERT INTO Customer (customer_name) VALUES (?)";
@@ -103,8 +100,3 @@ public class CustomerDetail {
         }
     }
 }
-
-
-
-
-

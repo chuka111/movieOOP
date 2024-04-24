@@ -98,7 +98,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1713971663481</updated>
-      <workItem from="1713971664646" duration="4007000" />
+      <workItem from="1713971664646" duration="5885000" />
     </task>
     <task id="LOCAL-00001" summary="adding test file for sql">
       <created>1713971793045</created>
@@ -121,7 +121,21 @@
       <option name="project" value="LOCAL" />
       <updated>1713972844409</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="customer class done">
+      <created>1713975689907</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1713975689907</updated>
+    </task>
+    <task id="LOCAL-00005" summary="customer class done">
+      <created>1713976492122</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1713976492122</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
