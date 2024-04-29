@@ -19,7 +19,11 @@ public class MovieSelection implements CartCalculator {
     private static final String user = "root";
     private static final String password = "password";
 
-    private double price;
+    private String movieName; // Declaration of movieName variable
+    private double amount; // Declaration of amount variable
+
+
+
 
     public static void main(String[] args) {
         try {
@@ -27,13 +31,13 @@ public class MovieSelection implements CartCalculator {
             Connection connection = DriverManager.getConnection(url, user, password);
 
             Scanner scanner = new Scanner(System.in);
-            ArrayList<String> cart = new ArrayList<>(); // Cart to store selected movies
+            List<String> cart = new ArrayList<>(); // Cart to store selected movies
 
             boolean exit = false;
             while (!exit) {
                 // Print out the movies with actors and prices
                 System.out.println("\nList of Movies with Actors and Prices:");
-                MoviesAndPrices(connection);
+                MovieSelection.MoviesAndPrices(connection);
 
                 // Ask the user to pick a movie
                 System.out.print("Pick a movie (Enter movie ID) or enter 0 to exit: ");
@@ -45,7 +49,7 @@ public class MovieSelection implements CartCalculator {
                     System.out.println("Exiting...");
                 } else {
                     // Get the selected movie
-                    String selectedMovie = getMovie(connection, movieId);
+                    String selectedMovie = MovieSelection.getMovie(connection, movieId);
                     if (selectedMovie != null) {
                         cart.add(selectedMovie); // Add the selected movie to the cart
                         System.out.println("Added to cart: " + selectedMovie);
@@ -53,12 +57,6 @@ public class MovieSelection implements CartCalculator {
                         System.out.println("Movie with ID " + movieId + " not found.");
                     }
                 }
-            }
-
-            // Display the cart
-            System.out.println("\nYour Cart:");
-            for (String movie : cart) {
-                System.out.println(movie);
             }
 
             // Calculate and display total price
@@ -131,4 +129,15 @@ public class MovieSelection implements CartCalculator {
         }
         return 0; // Default to 0 if movie not found or price not available
     }
+
+    // Getter for movie name
+    public String getMovieName() {
+        return movieName;
+    }
+
+    // Getter for amount
+    public double getAmount() {
+        return amount;
+    }
+
 }

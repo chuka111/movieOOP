@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="81fac49a-7f19-4716-87fd-64c5a8e69b48" name="Changes" comment="added new class called app to run the project.">
+    <list default="true" id="81fac49a-7f19-4716-87fd-64c5a8e69b48" name="Changes" comment="used interface to calculate costs of cart">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/App.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/CustomerDetail.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/CustomerDetail.java" afterDir="false" />
@@ -59,9 +59,9 @@
     ]
   }
 }]]></component>
-  <component name="RunManager" selected="Application.CustomerDetail">
-    <configuration name="CustomerDetail" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.example.CustomerDetail" />
+  <component name="RunManager" selected="Application.App">
+    <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.example.App" />
       <module name="JdbcExample" />
       <extension name="coverage">
         <pattern>
@@ -73,8 +73,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="MovieSelection (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.example.MovieSelection" />
+    <configuration name="CustomerDetail" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.example.CustomerDetail" />
       <module name="JdbcExample" />
       <extension name="coverage">
         <pattern>
@@ -127,11 +127,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.App" />
         <item itemvalue="Application.CustomerDetail" />
         <item itemvalue="Application.MovieSelection (4)" />
         <item itemvalue="Application.MovieSelection (3)" />
         <item itemvalue="Application.MovieSelection (2)" />
-        <item itemvalue="Application.MovieSelection (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -144,7 +144,7 @@
       <option name="presentableId" value="Default" />
       <updated>1713971663481</updated>
       <workItem from="1713971664646" duration="5885000" />
-      <workItem from="1714392276302" duration="14321000" />
+      <workItem from="1714392276302" duration="22019000" />
     </task>
     <task id="LOCAL-00001" summary="adding test file for sql">
       <created>1713971793045</created>
@@ -209,7 +209,14 @@
       <option name="project" value="LOCAL" />
       <updated>1714398683209</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="used interface to calculate costs of cart">
+      <created>1714406667211</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1714406667211</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -246,6 +253,7 @@
     <MESSAGE value="added a movie selection class" />
     <MESSAGE value="changed Customer class so user is prompted for a password too.&#10;added movie table to movie class" />
     <MESSAGE value="added new class called app to run the project." />
-    <option name="LAST_COMMIT_MESSAGE" value="added new class called app to run the project." />
+    <MESSAGE value="used interface to calculate costs of cart" />
+    <option name="LAST_COMMIT_MESSAGE" value="used interface to calculate costs of cart" />
   </component>
 </project>
