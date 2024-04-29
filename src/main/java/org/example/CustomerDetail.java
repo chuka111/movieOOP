@@ -3,6 +3,7 @@ package org.example;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
@@ -16,87 +17,196 @@ public class CustomerDetail {
         try {
             // Connect to the database
             Connection connection = DriverManager.getConnection(url, user, password);
-            // Ask the user for options
+
+            // User interface
             Scanner scanner = new Scanner(System.in);
             boolean exit = false;
             while (!exit) {
-                System.out.println("1. Create new customer");
-                System.out.println("2. Update customer name");
-                System.out.println("3. Delete customer");
-                System.out.println("4. Exit");
+                System.out.println("\nOptions:");
+                System.out.println("1. Login");
+                System.out.println("2. Create a new login");
+                System.out.println("3. Delete a user");
+                System.out.println("4. Change username");
+                System.out.println("5. Change password");
+                System.out.println("6. Exit");
                 System.out.print("Enter your choice: ");
                 int option = scanner.nextInt();
                 scanner.nextLine(); // Consume newline
 
                 switch (option) {
                     case 1:
-                        // Create new customer
-                        System.out.print("Enter customer name: ");
-                        String newName = scanner.nextLine();
-                        insertCustomer(connection, newName);
+                        login(connection);
                         break;
                     case 2:
-                        // Update customer name
-                        System.out.print("Enter current customer name: ");
-                        String currentName = scanner.nextLine();
-                        System.out.print("Enter new customer name: ");
-                        String updatedName = scanner.nextLine();
-                        updateCustomerName(connection, currentName, updatedName);
+                        createNewLogin(connection);
                         break;
                     case 3:
-                        // Delete customer
-                        System.out.print("Enter customer name to delete: ");
-                        String nameToDelete = scanner.nextLine();
-                        deleteCustomer(connection, nameToDelete);
+                        deleteUser(connection);
                         break;
                     case 4:
+                        changeUsername(connection);
+                        break;
+                    case 5:
+                        changePassword(connection);
+                        break;
+                    case 6:
                         exit = true;
                         System.out.println("Exiting...");
                         break;
                     default:
-                        System.out.println("Invalid choice!");
+                        System.out.println("Invalid choice. Please try again.");
                 }
             }
+
             // Close the connection
             connection.close();
         } catch (SQLException e) {
             System.err.println("SQL Exception: " + e.getMessage());
         }
     }
-    // Insert new customer into the customer table
-    static void insertCustomer(Connection connection, String name) throws SQLException {
-        String insertSQL = "INSERT INTO Customer (customer_name) VALUES (?)";
-        PreparedStatement preparedStatement = connection.prepareStatement(insertSQL);
-        preparedStatement.setString(1, name);
-        preparedStatement.executeUpdate();
-        System.out.println("Customer '" + name + "' added successfully\n");
+
+    // Method to log in
+    static void login(Connection connection) throws SQLException {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("\nLogin:");
+        System.out.print("Enter customer name: ");
+        String customerName = scanner.nextLine();
+        System.out.print("Enter password: ");
+        String password = scanner.nextLine();
+
+        // Validate customer credentials
+        if (validateCustomer(connection, customerName, password)) {
+            System.out.println("Login successful!");
+            // Add code to proceed after successful login
+        } else {
+            System.out.println("Invalid customer name or password. Please try again.");
+        }    }
+
+    // Method to validate customer credentials
+    static boolean validateCustomer(Connection connection, String customerName, String password) throws SQLException {
+        String query = "SELECT * FROM Customer WHERE customer_name = ? AND password = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, customerName);
+        preparedStatement.setString(2, password);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        return resultSet.next();    }
+
+    // Method to create a new login
+    static void createNewLogin(Connection connection) throws SQLException {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("\nCreating a new login:");
+        System.out.print("Enter customer name: ");
+        String customerName = scanner.nextLine();
+        System.out.print("Enter password: ");
+        String password = scanner.nextLine();
+
+        // Check if the customer already exists
+        if (customerExists(connection, customerName)) {
+            System.out.println("Customer already exists. Please choose a different name.");
+            return;
+        }
+
+        // Insert new customer with password
+        String insertQuery = "INSERT INTO Customer (customer_name, password) VALUES (?, ?)";
+        PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
+        preparedStatement.setString(1, customerName);
+        preparedStatement.setString(2, password);
+        int rowsInserted = preparedStatement.executeUpdate();
+        if (rowsInserted > 0) {
+            System.out.println("New login created successfully.");
+        } else {
+            System.out.println("Failed to create new login.");
+        }    }
+
+    // Method to delete a user
+    static void deleteUser(Connection connection) throws SQLException {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("\nDeleting a user:");
+        System.out.print("Enter customer name to delete: ");
+        String customerName = scanner.nextLine();
+
+        // Check if the customer exists
+        if (!customerExists(connection, customerName)) {
+            System.out.println("Customer does not exist.");
+            return;
+        }
+
+        // Delete the user
+        String deleteQuery = "DELETE FROM Customer WHERE customer_name = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery);
+        preparedStatement.setString(1, customerName);
+        int rowsDeleted = preparedStatement.executeUpdate();
+        if (rowsDeleted > 0) {
+            System.out.println("User deleted successfully.");
+        } else {
+            System.out.println("Failed to delete user.");
+        }
     }
 
-    // this code is simply just to insert the customers name onto the customer table
-    static void updateCustomerName(Connection connection, String currentName, String newName) throws SQLException {
-        String updateSQL = "UPDATE Customer SET customer_name = ? WHERE customer_name = ?";
-        PreparedStatement preparedStatement = connection.prepareStatement(updateSQL);
+    // Method to change username
+    static void changeUsername(Connection connection) throws SQLException {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("\nChanging username:");
+        System.out.print("Enter current customer name: ");
+        String currentName = scanner.nextLine();
+
+        // Check if the customer exists
+        if (!customerExists(connection, currentName)) {
+            System.out.println("Customer does not exist.");
+            return;
+        }
+
+        System.out.print("Enter new customer name: ");
+        String newName = scanner.nextLine();
+
+        // Update the username
+        String updateQuery = "UPDATE Customer SET customer_name = ? WHERE customer_name = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(updateQuery);
         preparedStatement.setString(1, newName);
         preparedStatement.setString(2, currentName);
-        int rowsAffected = preparedStatement.executeUpdate();
-        if (rowsAffected > 0) {
-            System.out.println("Customer name updated successfully\n");
+        int rowsUpdated = preparedStatement.executeUpdate();
+        if (rowsUpdated > 0) {
+            System.out.println("Username updated successfully.");
         } else {
-            System.out.println("Failed to update customer name. Customer with current name '" + currentName + "' not found.\n");
+            System.out.println("Failed to update username.");
         }
     }
 
-    // code writen to check if the customer enters the right name and if the name is right it updates the name of their current
-    // customer name with the new name they choose
-    static void deleteCustomer(Connection connection, String name) throws SQLException {
-        String deleteSQL = "DELETE FROM Customer WHERE customer_name = ?";
-        PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL);
-        preparedStatement.setString(1, name);
-        int rowsAffected = preparedStatement.executeUpdate();
-        if (rowsAffected > 0) {
-            System.out.println("Customer '" + name + "' deleted successfully\n");
-        } else {
-            System.out.println("Unsuccessful. Customer with name '" + name + "' not found.\n");
+    // Method to change password
+    static void changePassword(Connection connection) throws SQLException {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("\nChanging password:");
+        System.out.print("Enter customer name: ");
+        String customerName = scanner.nextLine();
+
+        // Check if the customer exists
+        if (!customerExists(connection, customerName)) {
+            System.out.println("Customer does not exist.");
+            return;
         }
+
+        System.out.print("Enter new password: ");
+        String newPassword = scanner.nextLine();
+
+        // Update the password
+        String updateQuery = "UPDATE Customer SET password = ? WHERE customer_name = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(updateQuery);
+        preparedStatement.setString(1, newPassword);
+        preparedStatement.setString(2, customerName);
+        int rowsUpdated = preparedStatement.executeUpdate();
+        if (rowsUpdated > 0) {
+            System.out.println("Password updated successfully.");
+        } else {
+            System.out.println("Failed to update password.");
+        }
+    }
+
+    // Method to check if customer exists
+    static boolean customerExists(Connection connection, String customerName) throws SQLException {
+        String query = "SELECT * FROM Customer WHERE customer_name = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, customerName);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        return resultSet.next();
     }
 }

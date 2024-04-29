@@ -26,6 +26,7 @@ CREATE TABLE `actor` (
   `actor_id` int NOT NULL AUTO_INCREMENT,
   `actor_name` varchar(50) DEFAULT NULL,
   `last_update` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `amount` DECIMAL(10,2),
   PRIMARY KEY (`actor_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -51,6 +52,7 @@ CREATE TABLE `customer` (
   `customer_id` int NOT NULL AUTO_INCREMENT,
   `customer_name` varchar(50) DEFAULT NULL,
   `last_update` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `password` VARCHAR(255),
   PRIMARY KEY (`customer_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
