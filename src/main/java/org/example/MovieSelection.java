@@ -1,17 +1,25 @@
 package org.example;
 
-import java.util.ArrayList;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Scanner;
-public class MovieSelection {
+import java.util.*;
+
+interface CartCalculator {
+    double calculateTotalCost(List<String> cart);
+}
+
+public class MovieSelection implements CartCalculator {
     // JDBC URL, username, and password
     private static final String url = "jdbc:mysql://localhost:3306/movie_oop";
     private static final String user = "root";
     private static final String password = "password";
+
+    private double price;
 
     public static void main(String[] args) {
         try {
@@ -19,11 +27,13 @@ public class MovieSelection {
             Connection connection = DriverManager.getConnection(url, user, password);
 
             Scanner scanner = new Scanner(System.in);
+            ArrayList<String> cart = new ArrayList<>(); // Cart to store selected movies
+
             boolean exit = false;
             while (!exit) {
                 // Print out the movies with actors and prices
                 System.out.println("\nList of Movies with Actors and Prices:");
-                printMoviesWithActorsAndPrices(connection);
+                MoviesAndPrices(connection);
 
                 // Ask the user to pick a movie
                 System.out.print("Pick a movie (Enter movie ID) or enter 0 to exit: ");
@@ -37,12 +47,24 @@ public class MovieSelection {
                     // Get the selected movie
                     String selectedMovie = getMovie(connection, movieId);
                     if (selectedMovie != null) {
-                        System.out.println("You picked: " + selectedMovie);
+                        cart.add(selectedMovie); // Add the selected movie to the cart
+                        System.out.println("Added to cart: " + selectedMovie);
                     } else {
                         System.out.println("Movie with ID " + movieId + " not found.");
                     }
                 }
             }
+
+            // Display the cart
+            System.out.println("\nYour Cart:");
+            for (String movie : cart) {
+                System.out.println(movie);
+            }
+
+            // Calculate and display total price
+            CartCalculator calculator = new MovieSelection();
+            double totalCost = calculator.calculateTotalCost(cart);
+            System.out.println("Total Price: €" + totalCost);
 
             // Close the connection
             connection.close();
@@ -52,15 +74,13 @@ public class MovieSelection {
     }
 
     // Method to print out the list of movies with actors and prices
-    static void printMoviesWithActorsAndPrices(Connection connection) throws SQLException {
+    static void MoviesAndPrices(Connection connection) throws SQLException {
         String query = "SELECT m.movie_id, m.movie_name, m.movie_genre, m.amount, a.actor_name " +
                 "FROM movies m " +
                 "JOIN filmactor fa ON m.movie_id = fa.movie_id " +
                 "JOIN actor a ON fa.actor_id = a.actor_id";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         ResultSet resultSet = preparedStatement.executeQuery();
-
-        ArrayList<String> movies = new ArrayList<>(); // ArrayList to store movie details
 
         while (resultSet.next()) {
             int movieId = resultSet.getInt("movie_id");
@@ -69,13 +89,7 @@ public class MovieSelection {
             double amount = resultSet.getDouble("amount");
             String actorName = resultSet.getString("actor_name");
 
-            String movieDetails = movieId + ". " + movieName + " (" + movieGenre + ") - €" + amount + " - " + actorName;
-            movies.add(movieDetails); // Add movie details to the ArrayList
-        }
-
-        // Print all movie details from the ArrayList
-        for (String movie : movies) {
-            System.out.println(movie);
+            System.out.println(movieId + ". " + movieName + " (" + movieGenre + ") - €" + amount + " - " + actorName);
         }
     }
 
@@ -90,5 +104,31 @@ public class MovieSelection {
         }
         return null;
     }
+    @Override
+    public double calculateTotalCost(List<String> cart) {
+        double totalPrice = 0;
+        try (Connection connection = DriverManager.getConnection(url, user, password)) {
+            for (String movie : cart) {
+                double price = getMoviePrice(connection, movie);
+                totalPrice += price;
+            }
+        } catch (SQLException e) {
+            System.err.println("Error retrieving movie prices: " + e.getMessage());
+        }
+        return totalPrice;
+    }
 
+    // Method to get the price of a movie from the database
+    private double getMoviePrice(Connection connection, String movieName) throws SQLException {
+        String query = "SELECT amount FROM movies WHERE movie_name = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, movieName);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getDouble("amount");
+                }
+            }
+        }
+        return 0; // Default to 0 if movie not found or price not available
+    }
 }

@@ -8,10 +8,17 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 public class CustomerDetail {
+    private static String loggedInCustomer; // Static variable to store the logged-in customer name
+
     // JDBC URL, username, and password
     private static final String url = "jdbc:mysql://localhost:3306/movie_oop";
     private static final String user = "root";
     private static final String password = "password";
+
+    // Constructor to set the logged-in customer name
+    public CustomerDetail(String name) {
+        loggedInCustomer = name;
+    }
 
     public static void main(String[] args) {
         try {
@@ -77,10 +84,13 @@ public class CustomerDetail {
         // Validate customer credentials
         if (validateCustomer(connection, customerName, password)) {
             System.out.println("Login successful!");
-            // Add code to proceed after successful login
+            // Set the logged-in customer
+            loggedInCustomer = customerName;
+            // Proceed with other actions after successful login
         } else {
             System.out.println("Invalid customer name or password. Please try again.");
-        }    }
+        }
+    }
 
     // Method to validate customer credentials
     static boolean validateCustomer(Connection connection, String customerName, String password) throws SQLException {
@@ -89,7 +99,8 @@ public class CustomerDetail {
         preparedStatement.setString(1, customerName);
         preparedStatement.setString(2, password);
         ResultSet resultSet = preparedStatement.executeQuery();
-        return resultSet.next();    }
+        return resultSet.next();
+    }
 
     // Method to create a new login
     static void createNewLogin(Connection connection) throws SQLException {
@@ -116,7 +127,8 @@ public class CustomerDetail {
             System.out.println("New login created successfully.");
         } else {
             System.out.println("Failed to create new login.");
-        }    }
+        }
+    }
 
     // Method to delete a user
     static void deleteUser(Connection connection) throws SQLException {
@@ -208,5 +220,10 @@ public class CustomerDetail {
         preparedStatement.setString(1, customerName);
         ResultSet resultSet = preparedStatement.executeQuery();
         return resultSet.next();
+    }
+
+    // Method to retrieve the logged-in customer
+    static String getLoggedInCustomer() {
+        return loggedInCustomer;
     }
 }
