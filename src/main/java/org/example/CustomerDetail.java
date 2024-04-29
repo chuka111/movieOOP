@@ -6,8 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
+import java.util.List;
 
 public class CustomerDetail {
+
     private static String loggedInCustomer; // Static variable to store the logged-in customer name
 
     // JDBC URL, username, and password
@@ -19,6 +21,10 @@ public class CustomerDetail {
     public CustomerDetail(String name) {
         loggedInCustomer = name;
     }
+
+    private String customerName; // Declaration of customerName variable
+    private String cpassword; // Declaration of cpassword variable
+    private List<String> cart;
 
     public static void main(String[] args) {
         try {
@@ -73,7 +79,7 @@ public class CustomerDetail {
     }
 
     // Method to log in
-    static void login(Connection connection) throws SQLException {
+    static String login(Connection connection) throws SQLException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("\nLogin:");
         System.out.print("Enter customer name: ");
@@ -90,6 +96,7 @@ public class CustomerDetail {
         } else {
             System.out.println("Invalid customer name or password. Please try again.");
         }
+        return customerName;
     }
 
     // Method to validate customer credentials
@@ -222,8 +229,22 @@ public class CustomerDetail {
         return resultSet.next();
     }
 
-    // Method to retrieve the logged-in customer
-    static String getLoggedInCustomer() {
-        return loggedInCustomer;
+
+
+    // Getter for customer name
+    public String getCustomerName() {
+        return customerName;
     }
+
+    // Getter for password
+    public String getCPassword() {
+        return cpassword;
+    }
+
+    // Getter for cart
+    public List<String> getCart() {
+        return cart;
+    }
+
+
 }
