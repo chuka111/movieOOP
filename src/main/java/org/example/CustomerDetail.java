@@ -11,6 +11,7 @@ import java.util.List;
 public class CustomerDetail {
 
     private static String loggedInCustomer; // Static variable to store the logged-in customer name
+    private static String loggedInCustomerName;
 
     // JDBC URL, username, and password
     private static final String url = "jdbc:mysql://localhost:3306/movie_oop";
@@ -246,5 +247,8 @@ public class CustomerDetail {
         return cart;
     }
 
+    public static String getLoggedInCustomerName() {
+        return loggedInCustomerName;
+    }
 
 }

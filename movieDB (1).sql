@@ -132,6 +132,7 @@ CREATE TABLE `payment` (
   `amount` decimal(10,2) DEFAULT NULL,
   `customer_id` int DEFAULT NULL,
   `last_update` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `customer_name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`payment_id`),
   KEY `customer_id` (`customer_id`),
   CONSTRAINT `payment_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`)
