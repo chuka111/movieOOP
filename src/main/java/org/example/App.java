@@ -37,6 +37,11 @@ public class App {
                     case 1:
                         // Call the login method of CustomerDetail class
                         String loggedInCustomer = CustomerDetail.login(connection);
+                        // Retrieve the logged-in customer's name
+                        String loggedInCustomerName = CustomerDetail.getLoggedInCustomerName();
+
+                        // Now you can use the logged-in customer's name in your code
+                        System.out.println("Logged in as: " + loggedInCustomerName);
                         // Check if login was successful
                         if (loggedInCustomer != null) {
                             System.out.println("Logged in as: " + loggedInCustomer);
@@ -118,6 +123,12 @@ public class App {
         CartCalculator calculator = new MovieSelection();
         double totalCost = calculator.calculateTotalCost(cart);
         System.out.println("Total Price: €" + totalCost);
+
+
+
+        // Add payment to the Payment table
+        MovieSelection.addPayment(connection, totalCost);
+
 
         // Close the connection
         connection.close();
