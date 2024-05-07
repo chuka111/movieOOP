@@ -139,7 +139,7 @@ public class CustomerDetail {
     }
 
     // Method to delete a user
-    static void deleteUser(Connection connection) throws SQLException {
+    public static void deleteUser(Connection connection) throws SQLException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("\nDeleting a user:");
         System.out.print("Enter customer name to delete: ");
@@ -151,15 +151,26 @@ public class CustomerDetail {
             return;
         }
 
-        // Delete the user
-        String deleteQuery = "DELETE FROM Customer WHERE customer_name = ?";
-        PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery);
-        preparedStatement.setString(1, customerName);
-        int rowsDeleted = preparedStatement.executeUpdate();
-        if (rowsDeleted > 0) {
+        // Delete related data from all tables
+        try {
+            connection.setAutoCommit(false); // Begin transaction
+
+            // Delete from the 'payment' table
+            deleteFromPayment(connection, customerName);
+
+            // Delete from other tables if needed
+            // deleteFromTable(connection, tableName, customerName);
+
+            // Delete from the 'Customer' table
+            deleteFromCustomer(connection, customerName);
+
+            connection.commit(); // Commit transaction
             System.out.println("User deleted successfully.");
-        } else {
-            System.out.println("Failed to delete user.");
+        } catch (SQLException ex) {
+            connection.rollback(); // Rollback transaction if an error occurs
+            System.out.println("Failed to delete user: " + ex.getMessage());
+        } finally {
+            connection.setAutoCommit(true); // Reset auto-commit mode
         }
     }
 
@@ -232,6 +243,25 @@ public class CustomerDetail {
 
     public static String getLoggedInCustomerName() {
         return loggedInCustomerName;
+    }
+
+
+    // Method to delete from the 'payment' table
+    private static void deleteFromPayment(Connection connection, String customerName) throws SQLException {
+        String deleteQuery = "DELETE FROM payment WHERE customer_id = (SELECT customer_id FROM Customer WHERE customer_name = ?)";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {
+            preparedStatement.setString(1, customerName);
+            preparedStatement.executeUpdate();
+        }
+    }
+
+    // Method to delete from the 'Customer' table
+    private static void deleteFromCustomer(Connection connection, String customerName) throws SQLException {
+        String deleteQuery = "DELETE FROM Customer WHERE customer_name = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {
+            preparedStatement.setString(1, customerName);
+            preparedStatement.executeUpdate();
+        }
     }
 
 }
