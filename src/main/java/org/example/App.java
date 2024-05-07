@@ -40,8 +40,6 @@ public class App {
                         // Retrieve the logged-in customer's name
                         String loggedInCustomerName = CustomerDetail.getLoggedInCustomerName();
 
-                        // Now you can use the logged-in customer's name in your code
-                        System.out.println("Logged in as: " + loggedInCustomerName);
                         // Check if login was successful
                         if (loggedInCustomer != null) {
                             System.out.println("Logged in as: " + loggedInCustomer);
@@ -68,11 +66,10 @@ public class App {
                                             CustomerDetail.changePassword(connection);
                                             break;
                                         case 3:
-                                            // Code to execute if choice is 3
-                                            System.out.println("Option 3 selected");
+                                            CustomerDetail.deleteUser(connection);
                                             break;
                                         default:
-                                            CustomerDetail.deleteUser(connection);
+                                            System.out.println("Invalid choice. Please try again.");
                                             break;
                                     }
                                     break;
