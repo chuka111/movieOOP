@@ -54,11 +54,28 @@ public class App {
                                     handleMovieSelection(connection);
                                     break;
                                 case 2:
-                                    CustomerDetail.changeUsername(connection);
-                                    CustomerDetail.changePassword(connection);
-                                    CustomerDetail.deleteUser(connection);
+                                    System.out.println("\nOptions:");
+                                    System.out.println("1. change username");
+                                    System.out.println("2. change password");
+                                    System.out.println("3. delete user");
+                                    int detail = scanner.nextInt();
+
+                                    switch (detail) {
+                                        case 1:
+                                            CustomerDetail.changeUsername(connection);
+                                            break;
+                                        case 2:
+                                            CustomerDetail.changePassword(connection);
+                                            break;
+                                        case 3:
+                                            // Code to execute if choice is 3
+                                            System.out.println("Option 3 selected");
+                                            break;
+                                        default:
+                                            CustomerDetail.deleteUser(connection);
+                                            break;
+                                    }
                                     break;
-                                // Add more cases as needed
                                 default:
                                     System.out.println("Invalid choice. Please try again.");
                             }
