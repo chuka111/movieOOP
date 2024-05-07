@@ -133,26 +133,29 @@ public class MovieSelection implements CartCalculator {
     }
 
     public static void addPayment(Connection connection, double totalCost) throws SQLException {
-        CartCalculator calculator = new MovieSelection();
         String customerName = CustomerDetail.getLoggedInCustomerName();
         int customerId = getCustomerId(connection, customerName); // Retrieve customer ID
-        String paymentQuery = "INSERT INTO Payment (amount, customer_id, customer_name) VALUES (?, ?, ?)";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(paymentQuery)) {
-            preparedStatement.setDouble(1, totalCost);
-            preparedStatement.setInt(2, customerId);
-            preparedStatement.setString(3, customerName);
-            int rowsInserted = preparedStatement.executeUpdate();
-            if (rowsInserted > 0) {
-                System.out.println("Payment inserted successfully.");
-            } else {
-                System.out.println("Failed to insert payment.");
+
+        if (customerId != -1) {
+            String paymentQuery = "INSERT INTO Payment (amount, customer_id, customer_name) VALUES (?, ?, ?)";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(paymentQuery)) {
+                preparedStatement.setDouble(1, totalCost);
+                preparedStatement.setInt(2, customerId);
+                preparedStatement.setString(3, customerName);
+                int rowsInserted = preparedStatement.executeUpdate();
+                if (rowsInserted > 0) {
+                    System.out.println("Payment inserted successfully.");
+                } else {
+                    System.out.println("Failed to insert payment.");
+                }
+            } catch (SQLException e) {
+                System.err.println("Failed to insert payment: " + e.getMessage());
             }
-        } catch (SQLException e) {
-            System.err.println("SQL Exception: " + e.getMessage());
+        } else {
+            System.out.println("Customer not found.");
         }
-
-
     }
+
 
     private static int getCustomerId(Connection connection, String customerName) throws SQLException {
         String query = "SELECT customer_id FROM Customer WHERE customer_name = ?";
@@ -166,15 +169,4 @@ public class MovieSelection implements CartCalculator {
         }
         return 0; // Default to 0 if customer ID not found
     }
-
-    // Getter for movie name
-    public String getMovieName() {
-        return movieName;
-    }
-
-    // Getter for amount
-    public double getAmount() {
-        return amount;
-    }
-
 }

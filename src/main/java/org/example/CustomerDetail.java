@@ -92,7 +92,7 @@ public class CustomerDetail {
         if (validateCustomer(connection, customerName, password)) {
             System.out.println("Login successful!");
             // Set the logged-in customer
-            loggedInCustomer = customerName;
+            loggedInCustomerName = customerName; // Set the value of loggedInCustomerName
             // Proceed with other actions after successful login
         } else {
             System.out.println("Invalid customer name or password. Please try again.");
@@ -228,23 +228,6 @@ public class CustomerDetail {
         preparedStatement.setString(1, customerName);
         ResultSet resultSet = preparedStatement.executeQuery();
         return resultSet.next();
-    }
-
-
-
-    // Getter for customer name
-    public String getCustomerName() {
-        return customerName;
-    }
-
-    // Getter for password
-    public String getCPassword() {
-        return cpassword;
-    }
-
-    // Getter for cart
-    public List<String> getCart() {
-        return cart;
     }
 
     public static String getLoggedInCustomerName() {
