@@ -33,6 +33,7 @@ public class MovieSelection implements CartCalculator {
             Scanner scanner = new Scanner(System.in);
             List<String> cart = new ArrayList<>(); // Cart to store selected movies
 
+
             boolean exit = false;
             while (!exit) {
                 // Print out the movies with actors and prices
